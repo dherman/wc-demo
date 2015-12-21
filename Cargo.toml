@@ -1,9 +1,9 @@
 [package]
 name = "wc-demo"
-version = "0.0.0"
+version = "0.1"
 authors = ["Dave Herman <dherman@mozilla.com>"]
 license = "MIT"
 
 [dependencies]
-neon = { version = "0.0.10", path = "../neon" }
+neon = { version = "0.1", path = "../neon" }
 rayon = { git = "https://github.com/nikomatsakis/rayon" }
