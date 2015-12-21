@@ -3,6 +3,7 @@ extern crate rayon;
 
 use rayon::par_iter::{ParallelIterator, IntoParallelIterator};
 
+use neon::vm;
 use neon::vm::{Call, Result, JS, Module};
 use neon::value::{Integer, String};
 use neon::mem::Handle;
@@ -55,11 +56,14 @@ fn wc_parallel(lines: &Vec<&str>, search: &str) -> i32 {
 
 fn search(call: Call) -> JS<Integer> {
     let scope = call.scope;
-    let corpus: Handle<Buffer> = try!(try!(call.arguments.require(scope, 0)).check::<Buffer>());
-    let search: Handle<String> = try!(try!(call.arguments.require(scope, 1)).check::<String>());
-    let search = &search.data()[..];
-    let lines = lines(try!(corpus.check_str()));
-    Ok(Integer::new(scope, wc_parallel(&lines, search)))
+    let buffer: Handle<Buffer> = try!(try!(call.arguments.require(scope, 0)).check::<Buffer>());
+    let string: Handle<String> = try!(try!(call.arguments.require(scope, 1)).check::<String>());
+    let search = &string.data()[..];
+    let total = vm::lock(buffer, |data| {
+        let corpus = data.as_str().unwrap();
+        wc_parallel(&lines(corpus), search)
+    });
+    Ok(Integer::new(scope, total))
 }
 
 #[no_mangle]
