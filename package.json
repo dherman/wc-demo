@@ -2,13 +2,18 @@
   "name": "wc-demo",
   "version": "0.0.0",
   "description": "word count demo using Neon",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/dherman/wc-demo"
+  },
   "main": "lib/index.js",
   "scripts": {
-    "postinstall": "neon-bridge build"
+    "postinstall": "neon build"
   },
   "author": "Dave Herman <dherman@mozilla.com>",
   "license": "MIT",
   "dependencies": {
-    "neon-bridge": "0.0.10"
+    "neon-bridge": "^0.1.2",
+    "neon-cli": "^0.1.1"
   }
 }

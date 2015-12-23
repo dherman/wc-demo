@@ -8,6 +8,8 @@ Currently only working in OS X. Make sure you have XCode, Node 4 or later, and R
 
 # Build and run
 
+From the project root directory, run:
+
 ```
 % npm install
 % node -e 'require("./")'
