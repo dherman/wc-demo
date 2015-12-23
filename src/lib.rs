@@ -33,7 +33,7 @@ fn matches(word: &str, search: &str) -> bool {
 }
 
 fn wc_line(line: &str, search: &str) -> i32 {
-    let mut total: i32 = 0;
+    let mut total = 0;
     for word in line.split(' ') {
         if matches(word, search) {
             total += 1;
@@ -41,6 +41,16 @@ fn wc_line(line: &str, search: &str) -> i32 {
     }
     total
 }
+
+// Also valid, with comparable performance:
+
+/*
+fn wc_line(line: &str, search: &str) -> i32 {
+    line.split(' ')
+        .filter(|word| matches(word, search))
+        .fold(0, |sum, _| sum + 1)
+}
+*/
 
 fn wc_sequential(lines: &Vec<&str>, search: &str) -> i32 {
     lines.into_iter()
