@@ -12,5 +12,5 @@ From the project root directory, run:
 
 ```
 % npm install
-% node -e 'require("./")'
+% npm start
 ```
