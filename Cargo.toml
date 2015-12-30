@@ -5,5 +5,5 @@ authors = ["Dave Herman <dherman@mozilla.com>"]
 license = "MIT"
 
 [dependencies]
-neon = { version = "0.1", path = "../neon" }
+neon = "0.1"
 rayon = { git = "https://github.com/nikomatsakis/rayon" }

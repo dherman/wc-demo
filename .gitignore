@@ -1,4 +1,4 @@
-binding.gyp
+Cargo.lock
 build
 target
 **/*~
