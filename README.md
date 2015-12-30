@@ -1,10 +1,10 @@
 # wc-demo
 
-A simple word-counting demo to showcase [Neon](https://github.com/dherman/neon).
+A simple word-counting demo to showcase [Neon](https://github.com/rustbridge/neon).
 
 # Setup
 
-Currently only working in OS X. Make sure you have XCode, Node 4 or later, and Rust 1.5 or later installed.
+See the [requirements for Neon](https://github.com/rustbridge/neon#requirements) (TL;DR: Node, Rust, and on OS X, XCode).
 
 # Build and run
 
