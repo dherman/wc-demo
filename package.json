@@ -8,6 +8,7 @@
   },
   "main": "lib/index.js",
   "scripts": {
+    "start": "node lib/index.js",
     "postinstall": "neon build"
   },
   "author": "Dave Herman <dherman@mozilla.com>",
