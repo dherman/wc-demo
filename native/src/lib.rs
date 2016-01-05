@@ -1,3 +1,4 @@
+#[macro_use]
 extern crate neon;
 extern crate rayon;
 
@@ -76,7 +77,6 @@ fn search(call: Call) -> JS<Integer> {
     Ok(Integer::new(scope, total))
 }
 
-#[no_mangle]
-pub fn node_main(mut module: Module) -> Result<()> {
-    module.export("search", search)
-}
+register_module!(m, {
+    m.export("search", search)
+});
