@@ -1,6 +1,6 @@
 [package]
 name = "wc-demo"
-version = "0.1.1"
+version = "0.1.2"
 authors = ["Dave Herman <dherman@mozilla.com>"]
 license = "MIT"
 

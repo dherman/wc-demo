@@ -5,10 +5,10 @@ extern crate rayon;
 use rayon::par_iter::{ParallelIterator, IntoParallelIterator};
 
 use neon::vm;
-use neon::vm::{Call, Result, JS, Module};
-use neon::value::{Integer, String};
+use neon::vm::{Call, JsResult};
+use neon::js::{JsInteger, JsString};
+use neon::js::binary::JsBuffer;
 use neon::mem::Handle;
-use neon::buffer::Buffer;
 
 fn lines(corpus: &str) -> Vec<&str> {
     corpus.lines()
@@ -65,16 +65,16 @@ fn wc_parallel(lines: &Vec<&str>, search: &str) -> i32 {
          .sum()
 }
 
-fn search(call: Call) -> JS<Integer> {
+fn search(call: Call) -> JsResult<JsInteger> {
     let scope = call.scope;
-    let buffer: Handle<Buffer> = try!(try!(call.arguments.require(scope, 0)).check::<Buffer>());
-    let string: Handle<String> = try!(try!(call.arguments.require(scope, 1)).check::<String>());
+    let buffer: Handle<JsBuffer> = try!(try!(call.arguments.require(scope, 0)).check::<JsBuffer>());
+    let string: Handle<JsString> = try!(try!(call.arguments.require(scope, 1)).check::<JsString>());
     let search = &string.data()[..];
     let total = vm::lock(buffer, |data| {
         let corpus = data.as_str().unwrap();
         wc_parallel(&lines(corpus), search)
     });
-    Ok(Integer::new(scope, total))
+    Ok(JsInteger::new(scope, total))
 }
 
 register_module!(m, {
