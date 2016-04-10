@@ -69,9 +69,9 @@ fn search(call: Call) -> JsResult<JsInteger> {
     let scope = call.scope;
     let buffer: Handle<JsBuffer> = try!(try!(call.arguments.require(scope, 0)).check::<JsBuffer>());
     let string: Handle<JsString> = try!(try!(call.arguments.require(scope, 1)).check::<JsString>());
-    let search = &string.data()[..];
+    let search = &string.value()[..];
     let total = vm::lock(buffer, |data| {
-        let corpus = data.as_str().unwrap();
+        let corpus = std::str::from_utf8(data.as_ref()).unwrap();
         wc_parallel(&lines(corpus), search)
     });
     Ok(JsInteger::new(scope, total))
