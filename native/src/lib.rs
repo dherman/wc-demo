@@ -2,10 +2,11 @@
 extern crate neon;
 extern crate rayon;
 
+use std::str;
+
 use rayon::par_iter::{ParallelIterator, IntoParallelIterator};
 
-use neon::vm;
-use neon::vm::{Call, JsResult};
+use neon::vm::{Call, JsResult, Lock};
 use neon::js::{JsInteger, JsString};
 use neon::js::binary::JsBuffer;
 use neon::mem::Handle;
@@ -67,11 +68,11 @@ fn wc_parallel(lines: &Vec<&str>, search: &str) -> i32 {
 
 fn search(call: Call) -> JsResult<JsInteger> {
     let scope = call.scope;
-    let buffer: Handle<JsBuffer> = try!(try!(call.arguments.require(scope, 0)).check::<JsBuffer>());
+    let mut buffer: Handle<JsBuffer> = try!(try!(call.arguments.require(scope, 0)).check::<JsBuffer>());
     let string: Handle<JsString> = try!(try!(call.arguments.require(scope, 1)).check::<JsString>());
-    let search = &string.data()[..];
-    let total = vm::lock(buffer, |data| {
-        let corpus = data.as_str().unwrap();
+    let search = &string.value()[..];
+    let total = buffer.grab(|data| {
+        let corpus = str::from_utf8(data.as_slice()).ok().unwrap();
         wc_parallel(&lines(corpus), search)
     });
     Ok(JsInteger::new(scope, total))
