@@ -10,4 +10,4 @@ crate-type = ["dylib"]
 
 [dependencies]
 neon = "0.1"
-rayon = { git = "https://github.com/nikomatsakis/rayon" }
+rayon = "0.6.0" 
