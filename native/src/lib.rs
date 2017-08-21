@@ -4,7 +4,7 @@ extern crate rayon;
 
 use std::str;
 
-use rayon::par_iter::{ParallelIterator, IntoParallelIterator};
+use rayon::iter::{ParallelIterator, IntoParallelIterator};
 
 use neon::vm::{Call, JsResult, Lock};
 use neon::js::{JsInteger, JsString};
